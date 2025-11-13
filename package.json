@@ -5,7 +5,7 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios",
+    "ios": "./start-ios.sh",
     "web": "expo start --web"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "expo": "~54.0.23",
+    "expo-font": "~14.0.9",
     "expo-router": "^6.0.14",
     "expo-status-bar": "~3.0.8",
     "nativewind": "^4.1.23",
