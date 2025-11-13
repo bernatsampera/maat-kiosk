@@ -3,7 +3,7 @@ import {NavigationContainer, ThemeProvider} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 // import DetailScreen from "./detail";
 import HomeScreen from "./home";
-import DetailScreen from "./details";
+import DetailScreen from "./class-detail";
 import {useFonts} from "expo-font";
 import {useEffect} from "react";
 import {setGlobalFontFamily} from "@/lib/globalFont";
