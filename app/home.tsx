@@ -86,7 +86,7 @@ export default function HomeScreen({navigation}: any) {
                 onPress={() => navigation.navigate("Detail", {id: item.id})}
               >
                 {/* CHANGED: Added rounded-2xl for consistency */}
-                <Card className="h-full rounded-2xl">
+                <Card className="h-42 rounded-2xl">
                   <CardContent className="p-4">
                     <Avatar
                       source={

@@ -3,6 +3,7 @@ import {cn} from "@/lib/utils";
 import {cva, type VariantProps} from "class-variance-authority";
 import * as React from "react";
 import {Platform, View, type ViewProps} from "react-native";
+import {Text} from "@/components/ui/text";
 
 const badgeVariants = cva(
   "flex-row items-center justify-center rounded-md px-2 py-1 text-sm font-medium",
@@ -59,7 +60,7 @@ const Badge = React.forwardRef<View, BadgeProps>(
           className={cn(badgeVariants({variant}), className)}
           {...props}
         >
-          {children}
+          <Text>{children}</Text>
         </View>
       </TextClassContext.Provider>
     );
