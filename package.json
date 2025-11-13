@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "./start-ios.sh",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "check-nativewind": "npx tailwindcss --input ./global.css --output output.css"
   },
   "dependencies": {
     "@react-navigation/native": "^7.1.19",
