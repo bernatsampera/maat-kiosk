@@ -86,7 +86,7 @@ export default function HomeScreen({navigation}: any) {
                 onPress={() => navigation.navigate("Detail", {id: item.id})}
               >
                 {/* CHANGED: Added rounded-2xl for consistency */}
-                <Card className="h-42 rounded-2xl">
+                <Card className="h-42  bg-gray-200 rounded-lg">
                   <CardContent className="p-4">
                     <Avatar
                       source={
@@ -103,11 +103,11 @@ export default function HomeScreen({navigation}: any) {
                       {item.name}
                     </Text>
 
-                    <Text className="text-sm text-muted-foreground mb-4">
+                    <Text className="text-xs text-muted-foreground mb-4">
                       {item.time}—{item.endTime}h
                     </Text>
 
-                    <View className="flex-row flex-wrap gap-1.5 mb-4">
+                    <View className="text-sm flex-row flex-wrap gap-1.5 mb-4">
                       {item.tags.map((tag) => (
                         <Badge
                           key={tag}
@@ -123,13 +123,13 @@ export default function HomeScreen({navigation}: any) {
                     <View className="gap-2 text-xs text-muted-foreground">
                       <View className="flex-row items-center gap-2">
                         <Users size={14} className="text-muted-foreground" />
-                        <Text className="text-muted-foreground">
+                        <Text className=" text-sm text-muted-foreground">
                           {item.attendees}/{item.maxAttendees} spots
                         </Text>
                       </View>
                       <View className="flex-row items-center gap-2">
                         <User size={14} className="text-muted-foreground" />
-                        <Text className="text-muted-foreground">
+                        <Text className="text-sm text-muted-foreground">
                           {item.instructor.name}
                         </Text>
                       </View>

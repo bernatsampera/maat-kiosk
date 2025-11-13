@@ -2,18 +2,16 @@ import {cn} from "@/lib/utils";
 import * as React from "react";
 import {Platform, View, type ViewProps} from "react-native";
 
-const Card = React.forwardRef<View, ViewProps>(
-  ({className, ...props}, ref) => (
-    <View
-      ref={ref}
-      className={cn(
-        "rounded-lg border border-border bg-card shadow-sm shadow-foreground/10",
-        className
-      )}
-      {...props}
-    />
-  )
-);
+const Card = React.forwardRef<View, ViewProps>(({className, ...props}, ref) => (
+  <View
+    ref={ref}
+    className={cn(
+      "rounded-lg border border-border bg-card shadow-sm shadow-foreground/10 ",
+      className
+    )}
+    {...props}
+  />
+));
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<View, ViewProps>(
