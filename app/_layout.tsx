@@ -1,5 +1,5 @@
 // app/_layout.tsx
-import {NavigationContainer} from "@react-navigation/native";
+import {NavigationContainer, ThemeProvider} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 // import DetailScreen from "./detail";
 import HomeScreen from "./home";
@@ -8,6 +8,7 @@ import {useFonts} from "expo-font";
 import {useEffect} from "react";
 import {setGlobalFontFamily} from "@/lib/globalFont";
 import "../global.css";
+import {NAV_THEME} from "@/lib/theme";
 const Stack = createNativeStackNavigator();
 
 // setGlobalFontFamily();
@@ -37,11 +38,13 @@ export default function Layout() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Detail" component={DetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider value={NAV_THEME["light"]}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Detail" component={DetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
