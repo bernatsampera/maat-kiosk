@@ -9,6 +9,7 @@ import {useEffect} from "react";
 import {setGlobalFontFamily} from "@/lib/globalFont";
 import "../global.css";
 import {NAV_THEME} from "@/lib/theme";
+import {GymProvider} from "@/utils/GymContext";
 const Stack = createNativeStackNavigator();
 
 // setGlobalFontFamily();
@@ -38,13 +39,15 @@ export default function Layout() {
   }
 
   return (
-    <ThemeProvider value={NAV_THEME["light"]}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Detail" component={DetailScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <GymProvider>
+      <ThemeProvider value={NAV_THEME["light"]}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Detail" component={DetailScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </GymProvider>
   );
 }

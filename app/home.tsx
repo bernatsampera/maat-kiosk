@@ -5,7 +5,8 @@ import {AspectRatio} from "@/components/ui/aspect-ratio";
 import {Badge} from "@/components/ui/badge";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {Avatar} from "@/components/ui/avatar-custom";
-import {todayClasses, formatDate} from "@/lib/mockData";
+import {formatDate} from "@/lib/mockData";
+import {useGym} from "@/utils/GymContext";
 import {
   ScrollView,
   View,
@@ -16,6 +17,8 @@ import {
 import {Users, User, Info} from "lucide-react-native";
 
 export default function HomeScreen({navigation}: any) {
+  const { classes: todayClasses } = useGym();
+
   return (
     <ScrollView className="flex-1 bg-background">
       {/* CHANGED: Consistent padding on all sides for the main content view */}
@@ -124,7 +127,7 @@ export default function HomeScreen({navigation}: any) {
                       <View className="flex-row items-center gap-2">
                         <Users size={14} className="text-muted-foreground" />
                         <Text className=" text-sm text-muted-foreground">
-                          {item.attendees}/{item.maxAttendees} spots
+                          {item.attendees.length}/{item.maxAttendees} spots
                         </Text>
                       </View>
                       <View className="flex-row items-center gap-2">
