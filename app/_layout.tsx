@@ -3,7 +3,7 @@ import {NavigationContainer, ThemeProvider} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 // import DetailScreen from "./detail";
 import HomeScreen from "./home";
-import DetailScreen from "./class-detail";
+import ClassDetailScreen from "./class-detail";
 import {useFonts} from "expo-font";
 import {useEffect} from "react";
 import {setGlobalFontFamily} from "@/lib/globalFont";
@@ -44,7 +44,7 @@ export default function Layout() {
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Detail" component={DetailScreen} />
+            <Stack.Screen name="ClassDetail" component={ClassDetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

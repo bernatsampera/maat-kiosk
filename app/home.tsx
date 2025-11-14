@@ -86,7 +86,9 @@ export default function HomeScreen({navigation}: any) {
             renderItem={({item}) => (
               <TouchableOpacity
                 className="flex-1"
-                onPress={() => navigation.navigate("Detail", {id: item.id})}
+                onPress={() =>
+                  navigation.navigate("ClassDetail", {id: item.id})
+                }
               >
                 {/* CHANGED: Added rounded-2xl for consistency */}
                 <Card className="h-42  bg-gray-200 rounded-lg">
