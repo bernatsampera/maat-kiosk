@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   FlatList
 } from "react-native";
-import {Users, Info} from "lucide-react-native";
+import {Users, Info, BotMessageSquare} from "lucide-react-native";
 
 export default function HomeScreen({navigation}: any) {
   const {classes: todayClasses} = useGym();
@@ -37,6 +37,26 @@ export default function HomeScreen({navigation}: any) {
                 </View>
                 <Text className="text-sm text-muted-foreground">
                   Search and view all members
+                </Text>
+              </View>
+            </CardContent>
+          </Card>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CheckInChat")}
+          className="mb-6"
+        >
+          <Card className="overflow-hidden">
+            <CardContent className="p-4">
+              <View className="flex-row items-center justify-between">
+                <View className="flex-row items-center gap-3">
+                  <BotMessageSquare size={20} className="text-primary" />
+                  <Text className="text-lg font-medium text-foreground">
+                    Check In Chat
+                  </Text>
+                </View>
+                <Text className="text-sm text-muted-foreground">
+                  Easy Chat to handle check ins
                 </Text>
               </View>
             </CardContent>

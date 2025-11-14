@@ -12,6 +12,7 @@ import {setGlobalFontFamily} from "@/lib/globalFont";
 import "../global.css";
 import {NAV_THEME} from "@/lib/theme";
 import {GymProvider} from "@/utils/GymContext";
+import CheckInChat from "./CheckInChat";
 const Stack = createNativeStackNavigator();
 
 // setGlobalFontFamily();
@@ -48,7 +49,11 @@ export default function Layout() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="ClassDetail" component={ClassDetailScreen} />
             <Stack.Screen name="MemberSearch" component={MemberSearchScreen} />
-            <Stack.Screen name="MemberCheckIn" component={MemberCheckInScreen} />
+            <Stack.Screen
+              name="MemberCheckIn"
+              component={MemberCheckInScreen}
+            />
+            <Stack.Screen name="CheckInChat" component={CheckInChat} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>
