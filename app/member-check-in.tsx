@@ -148,7 +148,7 @@ export default function MemberCheckInScreen({route, navigation}: any) {
         [
           {
             text: "OK",
-            onPress: () => navigation.navigate("Home")
+            onPress: () => navigation.popToTop()
           }
         ]
       );
@@ -200,7 +200,7 @@ export default function MemberCheckInScreen({route, navigation}: any) {
                 [
                   {
                     text: "OK",
-                    onPress: () => navigation.navigate("Home")
+                    onPress: () => navigation.popToTop()
                   }
                 ]
               );
