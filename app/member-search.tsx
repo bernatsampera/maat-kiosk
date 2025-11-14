@@ -1,54 +1,12 @@
 // app/member-search.tsx
 import React, {useState, useMemo} from "react";
-import {
-  View,
-  TextInput,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
-import {Text} from "@/components/ui/text";
-import {Card, CardContent} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
+import {View, TextInput, FlatList, StyleSheet} from "react-native";
+import {AppHeader} from "@/components/ui/app-header";
+import {MemberItem} from "@/components/ui/member-item";
+import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
 import {Member} from "@/lib/mockData";
-import {ArrowLeft} from "lucide-react-native";
-
-const beltColors = {
-  white: "bg-gray-400 text-white",
-  blue: "bg-blue-400 text-white",
-  purple: "bg-purple-400 text-white",
-  brown: "bg-amber-800 text-white",
-  black: "bg-gray-900 text-white"
-};
-
-interface MemberItemProps {
-  member: Member;
-  navigation: any;
-}
-
-const MemberItem: React.FC<MemberItemProps> = ({member, navigation}) => {
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("MemberCheckIn", {member})}
-    >
-      <Card className="mb-3">
-        <CardContent className="p-4">
-          <View className="flex-row items-center justify-between">
-            <View className="flex-1">
-              <Text className="text-lg font-medium text-foreground">
-                {member.name}
-              </Text>
-            </View>
-            <Badge className={`${beltColors[member.belt]} capitalize`}>
-              {member.belt}
-            </Badge>
-          </View>
-        </CardContent>
-      </Card>
-    </TouchableOpacity>
-  );
-};
+import {Text} from "@/components/ui/text";
 
 export default function MemberSearchScreen({navigation}: any) {
   const {getAllMembers} = useGym();
@@ -68,30 +26,38 @@ export default function MemberSearchScreen({navigation}: any) {
   }, [allMembers, searchQuery]);
 
   const renderMember = ({item}: {item: Member}) => (
-    <MemberItem member={item} navigation={navigation} />
+    <MemberItem
+      member={item}
+      onPress={() => navigation.navigate("MemberCheckIn", {member: item})}
+      showBelt={true}
+      size="md"
+    />
   );
 
   const renderEmptyState = () => (
-    <View className="flex-1 items-center justify-center py-12">
-      <Text className="text-muted-foreground text-center">
-        {searchQuery.trim()
+    <EmptyState
+      title={
+        searchQuery.trim()
           ? `No members found matching "${searchQuery}"`
-          : "No members available"}
-      </Text>
-    </View>
+          : "No members available"
+      }
+      description={
+        searchQuery.trim()
+          ? "Try a different search term"
+          : "There are no members in the system"
+      }
+      icon="search"
+      size="md"
+    />
   );
 
   return (
     <View className="flex-1 bg-background">
-      {/* Header */}
-      <View className="flex-row items-center p-4 border-b border-border">
-        <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-          <ArrowLeft size={24} className="text-foreground" />
-        </TouchableOpacity>
-        <Text className="text-2xl font-bold text-foreground">
-          Member Search
-        </Text>
-      </View>
+      <AppHeader
+        title="Member Search"
+        showBackButton={true}
+        onBackPress={() => navigation.goBack()}
+      />
 
       {/* Search Input */}
       <View className="p-4">

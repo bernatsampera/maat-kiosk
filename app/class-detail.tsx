@@ -11,6 +11,9 @@ import {
 import {Card, CardContent} from "@/components/ui/card";
 import {Avatar} from "@/components/ui/avatar-custom";
 import {Badge} from "@/components/ui/badge";
+import {AppHeader} from "@/components/ui/app-header";
+import {BeltBadge} from "@/components/ui/belt-badge";
+import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
 import {ClassData, Member} from "@/lib/mockData";
 import {
@@ -71,32 +74,15 @@ export default function ClassDetailScreen({route, navigation}: any) {
     );
   };
 
-  const getBeltColor = (belt: string) => {
-    const colors: {[key: string]: string} = {
-      white: "bg-gray-200",
-      blue: "bg-blue-500",
-      purple: "bg-purple-500",
-      brown: "bg-amber-700",
-      black: "bg-gray-900"
-    };
-    return colors[belt] || "bg-gray-200";
-  };
-
+  
   return (
     <ScrollView className="flex-1 bg-background">
+      <AppHeader
+        title="Class Details"
+        showBackButton={true}
+        onBackPress={() => navigation.goBack()}
+      />
       <View className="p-6">
-        {/* Header */}
-        <View className="flex-row items-center mb-6">
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="mr-4"
-          >
-            <ChevronLeft size={24} className="text-foreground" />
-          </TouchableOpacity>
-          <Text className="text-2xl font-bold text-foreground">
-            Class Details
-          </Text>
-        </View>
 
         {/* Class Overview Card */}
         <Card className="mb-6">
@@ -169,12 +155,12 @@ export default function ClassDetailScreen({route, navigation}: any) {
             </Text>
 
             {checkedInMembers.length === 0 ? (
-              <View className="items-center py-8">
-                <AlertCircle size={32} className="text-muted-foreground mb-2" />
-                <Text className="text-muted-foreground text-center">
-                  No members checked in yet
-                </Text>
-              </View>
+              <EmptyState
+                title="No members checked in yet"
+                description="Check in members to see them listed here"
+                icon="users"
+                size="md"
+              />
             ) : (
               <FlatList
                 data={checkedInMembers}
@@ -183,7 +169,7 @@ export default function ClassDetailScreen({route, navigation}: any) {
                 renderItem={({item}) => (
                   <View className="flex-row items-center gap-3 mb-4 pb-4 border-b border-border last:border-b-0">
                     <Avatar
-                      size="md"
+                      size="sm"
                       fallback={item.name
                         .split(" ")
                         .map((n) => n[0])
@@ -191,21 +177,16 @@ export default function ClassDetailScreen({route, navigation}: any) {
                       className="bg-primary"
                     />
                     <View className="flex-1">
-                      <Text className="font-semibold text-foreground">
+                      <Text className="text-xs font-medium text-muted-foreground">
                         {item.name}
                       </Text>
-                      <View className="flex-row items-center gap-2 mt-1">
-                        <View
-                          className={`w-2 h-2 rounded-full ${getBeltColor(item.belt)}`}
-                        />
-                        <Text className="text-sm text-muted-foreground capitalize">
-                          {item.belt} belt
-                        </Text>
+                      <View className="mt-1">
+                        <BeltBadge belt={item.belt} size="sm" />
                       </View>
                     </View>
                     <View className="flex-row items-center gap-1">
-                      <CheckCircle size={16} className="text-green-500" />
-                      <Text className="text-sm text-green-500">Checked in</Text>
+                      <CheckCircle size={12} className="text-green-500" />
+                      <Text className="text-xs text-green-500">Checked in</Text>
                     </View>
                   </View>
                 )}

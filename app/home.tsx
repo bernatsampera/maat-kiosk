@@ -2,9 +2,8 @@
 import {Text} from "@/components/ui/text";
 import {Card, CardContent} from "@/components/ui/card";
 import {AspectRatio} from "@/components/ui/aspect-ratio";
-import {Badge} from "@/components/ui/badge";
 import {Alert, AlertDescription} from "@/components/ui/alert";
-import {Avatar} from "@/components/ui/avatar-custom";
+import {ClassCard} from "@/components/ui/class-card";
 import {formatDate} from "@/lib/mockData";
 import {useGym} from "@/utils/GymContext";
 import {
@@ -14,7 +13,7 @@ import {
   TouchableOpacity,
   FlatList
 } from "react-native";
-import {Users, User, Info} from "lucide-react-native";
+import {Users, Info} from "lucide-react-native";
 
 export default function HomeScreen({navigation}: any) {
   const {classes: todayClasses} = useGym();
@@ -98,62 +97,14 @@ export default function HomeScreen({navigation}: any) {
             columnWrapperStyle={{gap: 24}}
             contentContainerStyle={{gap: 24}}
             renderItem={({item}) => (
-              <TouchableOpacity
-                className="flex-1"
+              <ClassCard
+                classData={item}
                 onPress={() =>
                   navigation.navigate("ClassDetail", {id: item.id})
                 }
-              >
-                <Card className="h-42  bg-gray-200 rounded-lg">
-                  <CardContent className="p-4">
-                    <Avatar
-                      source={
-                        item.instructor.avatar
-                          ? {uri: item.instructor.avatar}
-                          : undefined
-                      }
-                      fallback={item.instructor.initials}
-                      size="sm"
-                      className="mb-4"
-                    />
-
-                    <Text className="font-bold text-foreground mb-1 text-base">
-                      {item.name}
-                    </Text>
-
-                    <Text className="text-xs text-muted-foreground mb-4">
-                      {item.time}—{item.endTime}h
-                    </Text>
-
-                    <View className="text-sm flex-row flex-wrap gap-1.5 mb-4">
-                      {item.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant={tag.toLowerCase() as any}
-                          className="text-xs"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </View>
-
-                    <View className="gap-2 text-xs text-muted-foreground">
-                      <View className="flex-row items-center gap-2">
-                        <Users size={14} className="text-muted-foreground" />
-                        <Text className=" text-sm text-muted-foreground">
-                          {item.attendees.length}/{item.maxAttendees} spots
-                        </Text>
-                      </View>
-                      <View className="flex-row items-center gap-2">
-                        <User size={14} className="text-muted-foreground" />
-                        <Text className="text-sm text-muted-foreground">
-                          {item.instructor.name}
-                        </Text>
-                      </View>
-                    </View>
-                  </CardContent>
-                </Card>
-              </TouchableOpacity>
+                size="md"
+                className="flex-1"
+              />
             )}
           />
         </View>

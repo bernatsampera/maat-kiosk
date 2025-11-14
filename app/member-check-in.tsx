@@ -9,98 +9,15 @@ import {
 } from "react-native";
 import {Text} from "@/components/ui/text";
 import {Card, CardContent} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
+import {AppHeader} from "@/components/ui/app-header";
+import {ClassCard} from "@/components/ui/class-card";
+import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
-import {Member, ClassData} from "@/lib/mockData";
-import {
-  ArrowLeft,
-  Users,
-  Clock,
-  CheckCircle,
-  XCircle
-} from "lucide-react-native";
+import {ClassData} from "@/lib/mockData";
+import {Badge, XCircle} from "lucide-react-native";
 import {formatDate} from "@/lib/mockData";
-
-const beltColors = {
-  white: "bg-gray-400 text-white",
-  blue: "bg-blue-400 text-white",
-  purple: "bg-purple-400 text-white",
-  brown: "bg-amber-800 text-white",
-  black: "bg-gray-900 text-white"
-};
-
-interface ClassItemProps {
-  classData: ClassData;
-  isSelected: boolean;
-  isCheckedIn: boolean;
-  onSelect: () => void;
-}
-
-const ClassItem: React.FC<ClassItemProps> = ({
-  classData,
-  isSelected,
-  isCheckedIn,
-  onSelect
-}) => {
-  return (
-    <TouchableOpacity onPress={onSelect} disabled={false}>
-      <Card
-        className={`mb-3 ${isSelected ? "border-primary border-2" : ""} ${isCheckedIn ? "border-green-200 bg-green-50" : ""}`}
-      >
-        <CardContent className="p-4">
-          <View className="flex-row items-start justify-between mb-2">
-            <View className="flex-1">
-              <Text className="text-lg font-medium text-foreground mb-1">
-                {classData.name}
-              </Text>
-              <View className="flex-row items-center gap-2 mb-2">
-                <Clock size={16} className="text-muted-foreground" />
-                <Text className="text-sm text-muted-foreground">
-                  {classData.time} - {classData.endTime}
-                </Text>
-              </View>
-              <Text className="text-sm text-muted-foreground mb-2">
-                Instructor: {classData.instructor.name}
-              </Text>
-            </View>
-            {isCheckedIn && (
-              <View className="bg-green-100 p-2 rounded-full">
-                <CheckCircle size={20} className="text-green-600" />
-              </View>
-            )}
-          </View>
-
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row items-center gap-2">
-              <Users size={16} className="text-muted-foreground" />
-              <Text className="text-sm text-muted-foreground">
-                {classData.attendees.length}/{classData.maxAttendees} checked in
-              </Text>
-            </View>
-            <View className="flex-row gap-1">
-              {classData.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant={tag.toLowerCase() as any}
-                  className="text-xs"
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </View>
-          </View>
-
-          {isCheckedIn && (
-            <Text className="text-sm text-green-600 mt-2 font-medium">
-              ✓ Checked in - Tap to manage
-            </Text>
-          )}
-        </CardContent>
-      </Card>
-    </TouchableOpacity>
-  );
-};
+import {BeltBadge, beltColors} from "@/components/ui/belt-badge";
 
 export default function MemberCheckInScreen({route, navigation}: any) {
   const {member} = route.params;
@@ -114,7 +31,6 @@ export default function MemberCheckInScreen({route, navigation}: any) {
   const [isCheckingIn, setIsCheckingIn] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
 
-  // Show all classes, but distinguish between available and checked-in
   const allClasses = todayClasses;
 
   const handleCheckIn = async () => {
@@ -123,7 +39,6 @@ export default function MemberCheckInScreen({route, navigation}: any) {
       return;
     }
 
-    // Check if member is already checked in to this class
     const checkedInMembers = getCheckedInMembers(selectedClass.id);
     const isAlreadyCheckedIn = checkedInMembers.some((m) => m.id === member.id);
 
@@ -219,36 +134,33 @@ export default function MemberCheckInScreen({route, navigation}: any) {
   const renderClass = ({item}: {item: ClassData}) => {
     const checkedInMembers = getCheckedInMembers(item.id);
     const isCheckedIn = checkedInMembers.some((m) => m.id === member.id);
+    const isSelected = selectedClass?.id === item.id;
 
     return (
-      <ClassItem
+      <ClassCard
         classData={item}
-        isSelected={selectedClass?.id === item.id}
+        onPress={() => setSelectedClass(item)}
+        isSelected={isSelected}
         isCheckedIn={isCheckedIn}
-        onSelect={() => setSelectedClass(item)}
+        size="md"
+        showInstructor={true}
+        showAvatar={true}
+        className="mb-4"
       />
     );
   };
 
   const renderEmptyState = () => (
-    <View className="flex-1 items-center justify-center py-12">
-      <Text className="text-muted-foreground text-center">
-        No classes available today
-      </Text>
-    </View>
+    <EmptyState title="No classes available today" icon="calendar" size="md" />
   );
 
   return (
     <View className="flex-1 bg-background">
-      {/* Header */}
-      <View className="flex-row items-center p-4 border-b border-border">
-        <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-          <ArrowLeft size={24} className="text-foreground" />
-        </TouchableOpacity>
-        <Text className="text-2xl font-bold text-foreground">
-          Member Check-In
-        </Text>
-      </View>
+      <AppHeader
+        title="Member Check-In"
+        showBackButton={true}
+        onBackPress={() => navigation.goBack()}
+      />
 
       {/* Member Info */}
       <View className="p-4">
@@ -259,11 +171,7 @@ export default function MemberCheckInScreen({route, navigation}: any) {
                 <Text className="text-lg font-medium text-foreground mb-1">
                   {member.name}
                 </Text>
-                {/* {member.belt && (
-                  <Badge className={`${beltColors[member.belt]} capitalize`}>
-                    {member.belt} belt
-                  </Badge>
-                )} */}
+                {member.belt && <BeltBadge belt={member.belt} />}
               </View>
             </View>
           </CardContent>
