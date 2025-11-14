@@ -65,19 +65,23 @@ export default function ClassDetailScreen({route, navigation}: any) {
     Alert.alert(
       "Check In Member",
       "Select a member to check in:",
-      availableMembers.map((member) => ({
-        text: `${member.name} (${member.belt} belt)`,
-        onPress: () => handleCheckIn(member.id)
-      })),
+      [
+        // Add this as the first button for easy cancellation
+        {text: "Cancel", style: "cancel"},
+        // Then your dynamic buttons
+        ...availableMembers.map((member) => ({
+          text: `${member.name} (${member.belt} belt)`,
+          onPress: () => handleCheckIn(member.id)
+        }))
+      ],
+      // You can keep this for Android compatibility, but it won't fire on iOS
       {cancelable: true}
     );
   };
 
-  
   return (
     <ScrollView className="flex-1 bg-background">
       <View className="p-6">
-
         {/* Class Overview Card */}
         <Card className="mb-6">
           <CardContent className="p-6">
