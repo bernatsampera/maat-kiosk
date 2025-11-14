@@ -21,7 +21,6 @@ export default function HomeScreen({navigation}: any) {
 
   return (
     <ScrollView className="flex-1 bg-background">
-      {/* CHANGED: Consistent padding on all sides for the main content view */}
       <View className="p-6">
         {/* Member Search Card */}
         <TouchableOpacity
@@ -45,7 +44,6 @@ export default function HomeScreen({navigation}: any) {
           </Card>
         </TouchableOpacity>
         {/* Header Section */}
-        {/* CHANGED: Adjusted margin for better rhythm */}
         <View className="mb-4">
           <Text className="text-sm text-muted-foreground mb-1 font-light tracking-wide">
             {formatDate()}
@@ -56,7 +54,6 @@ export default function HomeScreen({navigation}: any) {
         </View>
 
         {/* Hero Banner */}
-        {/* CHANGED: Standardized bottom margin */}
         <Card className="mb-4 overflow-hidden rounded-2xl">
           <AspectRatio ratio={16 / 9}>
             <View className="relative h-full w-full">
@@ -66,9 +63,7 @@ export default function HomeScreen({navigation}: any) {
                 }}
                 className="absolute inset-0 w-full h-full"
               />
-              {/* CHANGED: Made gradient stronger at the bottom for readability */}
               <View className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-              {/* CHANGED: Padded the text container for a much cleaner look */}
               <View className="absolute bottom-0 left-0 right-0 p-6">
                 <Text className="text-xs text-white/80 mb-1 uppercase tracking-wider font-semibold">
                   EXPERIENCES
@@ -99,8 +94,6 @@ export default function HomeScreen({navigation}: any) {
             data={todayClasses}
             numColumns={2}
             keyExtractor={(item) => item.id}
-            // CRITICAL FIX: This prevents the FlatList from trying to scroll
-            // independently inside the ScrollView, fixing layout issues.
             scrollEnabled={false}
             columnWrapperStyle={{gap: 24}}
             contentContainerStyle={{gap: 24}}
@@ -111,7 +104,6 @@ export default function HomeScreen({navigation}: any) {
                   navigation.navigate("ClassDetail", {id: item.id})
                 }
               >
-                {/* CHANGED: Added rounded-2xl for consistency */}
                 <Card className="h-42  bg-gray-200 rounded-lg">
                   <CardContent className="p-4">
                     <Avatar
@@ -122,7 +114,7 @@ export default function HomeScreen({navigation}: any) {
                       }
                       fallback={item.instructor.initials}
                       size="sm"
-                      className="mb-4" // ADDED: Margin below avatar
+                      className="mb-4"
                     />
 
                     <Text className="font-bold text-foreground mb-1 text-base">
@@ -145,7 +137,6 @@ export default function HomeScreen({navigation}: any) {
                       ))}
                     </View>
 
-                    {/* CHANGED: Stacked info for better readability and replaced emojis with icons */}
                     <View className="gap-2 text-xs text-muted-foreground">
                       <View className="flex-row items-center gap-2">
                         <Users size={14} className="text-muted-foreground" />
@@ -178,7 +169,6 @@ export default function HomeScreen({navigation}: any) {
                 className="absolute inset-0 w-full h-full"
               />
               <View className="absolute inset-0 bg-gradient-to-r from-red-600/80 via-red-700/50 to-transparent" />
-              {/* CHANGED: Padded the text container here as well */}
               <View className="absolute bottom-0 left-0 right-0 p-6">
                 <Text className="text-2xl font-bold text-white mb-1">
                   Aranha x MAAT Store
@@ -194,7 +184,6 @@ export default function HomeScreen({navigation}: any) {
         {/* Footer Pro Tip */}
         <Alert variant="info">
           <View className="flex-row items-start gap-4">
-            {/* CHANGED: Replaced emoji with a proper icon */}
             <Info size={18} className="text-info-foreground mt-1" />
             <AlertDescription className="flex-1">
               <Text className="font-medium text-foreground mb-1">Pro tip</Text>

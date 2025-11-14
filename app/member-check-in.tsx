@@ -114,8 +114,6 @@ export default function MemberCheckInScreen({route, navigation}: any) {
   const [isCheckingIn, setIsCheckingIn] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
 
-  console.log("today classes", todayClasses.length);
-
   // Show all classes, but distinguish between available and checked-in
   const allClasses = todayClasses;
 
