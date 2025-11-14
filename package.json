@@ -5,7 +5,8 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "./start-ios.sh",
+    "ios": "expo start --ios",
+    "dev-ios": "./start-ios.sh",
     "web": "expo start --web",
     "check-nativewind": "npx tailwindcss --input ./global.css --output output.css"
   },
