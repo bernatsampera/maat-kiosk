@@ -11,7 +11,6 @@ import {
 import {Card, CardContent} from "@/components/ui/card";
 import {Avatar} from "@/components/ui/avatar-custom";
 import {Badge} from "@/components/ui/badge";
-import {AppHeader} from "@/components/ui/app-header";
 import {BeltBadge} from "@/components/ui/belt-badge";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
@@ -77,11 +76,6 @@ export default function ClassDetailScreen({route, navigation}: any) {
   
   return (
     <ScrollView className="flex-1 bg-background">
-      <AppHeader
-        title="Class Details"
-        showBackButton={true}
-        onBackPress={() => navigation.goBack()}
-      />
       <View className="p-6">
 
         {/* Class Overview Card */}

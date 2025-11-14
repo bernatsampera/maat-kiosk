@@ -10,7 +10,6 @@ import {
 import {Text} from "@/components/ui/text";
 import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {AppHeader} from "@/components/ui/app-header";
 import {ClassCard} from "@/components/ui/class-card";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
@@ -156,12 +155,6 @@ export default function MemberCheckInScreen({route, navigation}: any) {
 
   return (
     <View className="flex-1 bg-background">
-      <AppHeader
-        title="Member Check-In"
-        showBackButton={true}
-        onBackPress={() => navigation.goBack()}
-      />
-
       {/* Member Info */}
       <View className="p-4">
         <Card className="mb-4">

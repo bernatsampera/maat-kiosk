@@ -32,7 +32,7 @@ This design system provides a comprehensive guide for building consistent, kiosk
 ## 📏 Typography
 
 ### Font Hierarchy
-- **Screen Titles**: `text-2xl font-bold` - Used in AppHeader
+- **Screen Titles**: `text-2xl font-bold` - Main screen headings
 - **Card Titles**: `text-lg font-medium` - Main card headings
 - **Section Headers**: `text-base font-bold` - Section dividers
 - **Body Text**: `text-sm text-foreground` - Regular content
@@ -61,24 +61,6 @@ This design system provides a comprehensive guide for building consistent, kiosk
 - **Large Bottom Margins**: `mb-6` (24px) for section separation
 
 ## 🎪 Components
-
-### AppHeader
-Consistent header component for all screens.
-
-**Props:**
-- `title: string` - Screen title
-- `showBackButton?: boolean` - Show back button
-- `onBackPress?: () => void` - Back button handler
-- `rightComponent?: React.ReactNode` - Optional right side content
-
-**Usage:**
-```tsx
-<AppHeader
-  title="Member Check-In"
-  showBackButton={true}
-  onBackPress={() => navigation.goBack()}
-/>
-```
 
 ### BeltBadge
 Standardized belt color display.
@@ -209,7 +191,7 @@ Consistent empty state display.
 ## 🎨 Patterns
 
 ### Navigation
-- **Back Navigation**: Always use AppHeader with back button
+- **Back Navigation**: Use consistent back button patterns
 - **Tab Navigation**: Clear visual indication of current tab
 - **Drill-Down**: Maintain clear navigation hierarchy
 
@@ -253,13 +235,12 @@ Consistent empty state display.
 
 When updating existing components to use this design system:
 
-1. **Replace Custom Headers**: Use AppHeader component
-2. **Standardize Cards**: Use consistent Card patterns
-3. **Consolidate Belt Logic**: Use BeltBadge component
-4. **Unify Empty States**: Use EmptyState component
-5. **Standardize Lists**: Use consistent spacing and patterns
-6. **Update Typography**: Follow the typography hierarchy
-7. **Apply Color System**: Use design system color tokens
+1. **Standardize Cards**: Use consistent Card patterns
+2. **Consolidate Belt Logic**: Use BeltBadge component
+3. **Unify Empty States**: Use EmptyState component
+4. **Standardize Lists**: Use consistent spacing and patterns
+5. **Update Typography**: Follow the typography hierarchy
+6. **Apply Color System**: Use design system color tokens
 
 ## 📚 Resources
 

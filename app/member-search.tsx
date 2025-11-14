@@ -1,7 +1,6 @@
 // app/member-search.tsx
 import React, {useState, useMemo} from "react";
 import {View, TextInput, FlatList, StyleSheet} from "react-native";
-import {AppHeader} from "@/components/ui/app-header";
 import {MemberItem} from "@/components/ui/member-item";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
@@ -53,12 +52,6 @@ export default function MemberSearchScreen({navigation}: any) {
 
   return (
     <View className="flex-1 bg-background">
-      <AppHeader
-        title="Member Search"
-        showBackButton={true}
-        onBackPress={() => navigation.goBack()}
-      />
-
       {/* Search Input */}
       <View className="p-4">
         <TextInput
