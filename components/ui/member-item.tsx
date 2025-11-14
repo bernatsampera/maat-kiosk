@@ -6,7 +6,7 @@ import {BeltBadge} from "@/components/ui/belt-badge";
 import {Text} from "@/components/ui/text";
 import {CheckCircle} from "lucide-react-native";
 import {cn} from "@/lib/utils";
-import {Member} from "@/lib/mockData";
+import {Member} from "@/types/gym";
 
 interface MemberItemProps extends ViewProps {
   member: Member;

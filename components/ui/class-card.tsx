@@ -6,7 +6,7 @@ import {Badge} from "@/components/ui/badge";
 import {Text} from "@/components/ui/text";
 import {Users, User} from "lucide-react-native";
 import {cn} from "@/lib/utils";
-import {ClassData} from "@/lib/mockData";
+import {ClassData} from "@/types/gym";
 
 interface ClassCardProps extends ViewProps {
   classData: ClassData;
@@ -43,7 +43,8 @@ const ClassCard = React.forwardRef<View, ClassCardProps>(
     const cardClassName = cn(
       sizeClasses[size],
       isSelected && "border-primary border-2",
-      isCheckedIn && "border-green-200 bg-green-50",
+      isCheckedIn && "border-green-400 bg-green-50 border-2",
+      "rounded-xl",
       className
     );
 

@@ -1,21 +1,15 @@
 // app/member-check-in.tsx
 import React, {useState} from "react";
-import {
-  View,
-  Alert,
-  FlatList,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
+import {View, Alert, FlatList} from "react-native";
 import {Text} from "@/components/ui/text";
 import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {ClassCard} from "@/components/ui/class-card";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
-import {ClassData} from "@/lib/mockData";
-import {Badge, XCircle} from "lucide-react-native";
-import {formatDate} from "@/lib/mockData";
+import {ClassData} from "@/types/gym";
+import {XCircle} from "lucide-react-native";
+import {formatDate} from "@/data/gymData";
 import {BeltBadge, beltColors} from "@/components/ui/belt-badge";
 
 export default function MemberCheckInScreen({route, navigation}: any) {

@@ -14,7 +14,7 @@ import {Badge} from "@/components/ui/badge";
 import {BeltBadge} from "@/components/ui/belt-badge";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
-import {ClassData, Member} from "@/lib/mockData";
+import {ClassData, Member} from "@/types/gym";
 import {
   Users,
   Clock,

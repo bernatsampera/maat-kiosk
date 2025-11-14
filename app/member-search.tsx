@@ -4,7 +4,7 @@ import {View, TextInput, FlatList, StyleSheet} from "react-native";
 import {MemberItem} from "@/components/ui/member-item";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
-import {Member} from "@/lib/mockData";
+import {Member} from "@/types/gym";
 import {Text} from "@/components/ui/text";
 
 export default function MemberSearchScreen({navigation}: any) {
@@ -72,7 +72,7 @@ export default function MemberSearchScreen({navigation}: any) {
           placeholder="Search members by name..."
           value={searchQuery}
           onChangeText={setSearchQuery}
-          className="bg-card border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground"
+          className="bg-card border border-border rounded-lg px-4 py-3 placeholder:text-muted-foreground"
         />
         <Text className="text-sm text-muted-foreground mt-2 text-center">
           Tap on a member to check them in

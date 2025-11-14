@@ -4,7 +4,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import {AspectRatio} from "@/components/ui/aspect-ratio";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {ClassCard} from "@/components/ui/class-card";
-import {formatDate} from "@/lib/mockData";
+import {formatDate} from "@/data/gymData";
 import {useGym} from "@/utils/GymContext";
 import {
   ScrollView,

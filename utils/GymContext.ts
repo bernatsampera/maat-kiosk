@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Member, Instructor, ClassData, members, instructors, todayClasses } from '@/lib/mockData';
+import { Member, Instructor, ClassData, members, instructors, todayClasses } from '@/data/gymData';
 
 interface GymContextType {
   // State
