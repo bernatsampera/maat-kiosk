@@ -62,7 +62,7 @@ export default function HomeScreen({navigation}: any) {
                 }}
                 className="absolute inset-0 w-full h-full"
               />
-              <View className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <View className="absolute inset-0 bg-black/70" />
               <View className="absolute bottom-0 left-0 right-0 p-6">
                 <Text className="text-xs text-white/80 mb-1 uppercase tracking-wider font-semibold">
                   EXPERIENCES
