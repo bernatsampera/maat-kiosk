@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from src.chat_router import router as chat_router
+
 app = FastAPI(
     title="BleakAI API",
     description="API for prompt testing and refinement",
@@ -41,3 +43,6 @@ async def chat(request: ChatRequest):
     print("message", request.message)
     
     return {"status": "ok"}
+
+
+app.include_router(chat_router)

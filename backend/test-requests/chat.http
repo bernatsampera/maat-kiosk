@@ -8,3 +8,33 @@ Content-Type: application/json
 {
   "message": "{{message}}"
 }
+
+
+### Variables (reusable across requests)
+@baseUrl = http://localhost:8000
+@thread_id = thread-123
+@message = Hello, this is a test message for streaming!
+@resume_data = {"interrupt_point": "after_step_2", "context": "previous AI response"}
+
+###
+
+### 1. Test POST /chat/{thread_id}/stream
+### Expects: JSON body with "input" (str), returns SSE stream of updates
+POST {{baseUrl}}/chat/{{thread_id}}/stream
+Content-Type: application/json
+
+{
+  "input": "{{message}}"
+}
+
+###
+
+### 2. Test POST /chat/{thread_id}/resume
+### Expects: JSON body with "resume" (str), returns SSE stream of resumed updates
+### (Use a different thread_id if you want isolation, e.g., @thread_id = thread-456)
+POST {{baseUrl}}/chat/{{thread_id}}/resume
+Content-Type: application/json
+
+{
+  "resume": "{{resume_data}}"
+}
