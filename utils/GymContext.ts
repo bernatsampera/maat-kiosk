@@ -9,6 +9,7 @@ interface GymContextType {
 
   // Functions
   checkInMember: (classId: string, memberId: string) => void;
+  removeMemberFromClass: (classId: string, memberId: string) => void;
   getCheckedInMembers: (classId: string) => Member[];
   getClassById: (id: string) => ClassData | undefined;
   getAllMembers: () => Member[];
@@ -44,6 +45,21 @@ export function GymProvider({ children }: GymProviderProps) {
     );
   };
 
+  const removeMemberFromClass = async (classId: string, memberId: string) => {
+    setClasses(prevClasses =>
+      prevClasses.map(cls => {
+        if (cls.id === classId) {
+          // Remove member from attendees
+          return {
+            ...cls,
+            attendees: cls.attendees.filter(id => id !== memberId)
+          };
+        }
+        return cls;
+      })
+    );
+  };
+
   const getCheckedInMembers = (classId: string): Member[] => {
     const classData = classes.find(cls => cls.id === classId);
     if (!classData) return [];
@@ -66,6 +82,7 @@ export function GymProvider({ children }: GymProviderProps) {
     members: membersList,
     instructors: instructorsList,
     checkInMember,
+    removeMemberFromClass,
     getCheckedInMembers,
     getClassById,
     getAllMembers,

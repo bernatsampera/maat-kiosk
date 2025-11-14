@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 // import DetailScreen from "./detail";
 import HomeScreen from "./home";
 import ClassDetailScreen from "./class-detail";
+import MemberSearchScreen from "./member-search";
+import MemberCheckInScreen from "./member-check-in";
 import {useFonts} from "expo-font";
 import {useEffect} from "react";
 import {setGlobalFontFamily} from "@/lib/globalFont";
@@ -45,6 +47,8 @@ export default function Layout() {
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="ClassDetail" component={ClassDetailScreen} />
+            <Stack.Screen name="MemberSearch" component={MemberSearchScreen} />
+            <Stack.Screen name="MemberCheckIn" component={MemberCheckInScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

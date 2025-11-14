@@ -23,6 +23,27 @@ export default function HomeScreen({navigation}: any) {
     <ScrollView className="flex-1 bg-background">
       {/* CHANGED: Consistent padding on all sides for the main content view */}
       <View className="p-6">
+        {/* Member Search Card */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MemberSearch")}
+          className="mb-6"
+        >
+          <Card className="overflow-hidden">
+            <CardContent className="p-4">
+              <View className="flex-row items-center justify-between">
+                <View className="flex-row items-center gap-3">
+                  <Users size={20} className="text-primary" />
+                  <Text className="text-lg font-medium text-foreground">
+                    Member Search
+                  </Text>
+                </View>
+                <Text className="text-sm text-muted-foreground">
+                  Search and view all members
+                </Text>
+              </View>
+            </CardContent>
+          </Card>
+        </TouchableOpacity>
         {/* Header Section */}
         {/* CHANGED: Adjusted margin for better rhythm */}
         <View className="mb-4">
@@ -171,7 +192,6 @@ export default function HomeScreen({navigation}: any) {
         </Card>
 
         {/* Footer Pro Tip */}
-        {/* CHANGED: Removed bottom margin as parent padding handles it */}
         <Alert variant="info">
           <View className="flex-row items-start gap-4">
             {/* CHANGED: Replaced emoji with a proper icon */}

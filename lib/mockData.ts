@@ -37,7 +37,17 @@ export const members: Member[] = [
   {id: "m12", name: "Sage Gonzalez", belt: "black"},
   {id: "m13", name: "Phoenix Perez", belt: "white"},
   {id: "m14", name: "River Turner", belt: "blue"},
-  {id: "m15", name: "Sky Parker", belt: "purple"}
+  {id: "m15", name: "Sky Parker", belt: "purple"},
+  {id: "m16", name: "Jamie Torres", belt: "white"},
+  {id: "m17", name: "Harper Reyes", belt: "blue"},
+  {id: "m18", name: "Logan Gray", belt: "purple"},
+  {id: "m19", name: "Charlie Cruz", belt: "brown"},
+  {id: "m20", name: "Dakota Kim", belt: "white"},
+  {id: "m21", name: "Elliot Stone", belt: "blue"},
+  {id: "m22", name: "Micah Brooks", belt: "purple"},
+  {id: "m23", name: "Peyton Wood", belt: "black"},
+  {id: "m24", name: "Reese Foster", belt: "white"},
+  {id: "m25", name: "Hayden Watts", belt: "brown"}
 ];
 
 export const instructors: Instructor[] = [
@@ -87,19 +97,7 @@ export const todayClasses: ClassData[] = [
     endTime: "11:00",
     tags: ["BJJ", "MMA"],
     instructor: instructors[0],
-    attendees: [
-      "m2",
-      "m3",
-      "m4",
-      "m5",
-      "m6",
-      "m7",
-      "m8",
-      "m9",
-      "m10",
-      "m11",
-      "m12"
-    ],
+    attendees: ["m1", "m2", "m3", "m4", "m16", "m17", "m18"],
     maxAttendees: 30
   },
   {
@@ -109,7 +107,7 @@ export const todayClasses: ClassData[] = [
     endTime: "12:30",
     tags: ["KIDS", "BJJ"],
     instructor: instructors[1],
-    attendees: ["m6", "m9", "m13", "m14", "m15", "m2", "m3", "m7"],
+    attendees: ["m9", "m13", "m20", "m24", "m6"],
     maxAttendees: 20
   },
   {
@@ -119,23 +117,7 @@ export const todayClasses: ClassData[] = [
     endTime: "14:00",
     tags: ["YOGA"],
     instructor: instructors[2],
-    attendees: [
-      "m1",
-      "m2",
-      "m3",
-      "m4",
-      "m5",
-      "m6",
-      "m7",
-      "m8",
-      "m9",
-      "m10",
-      "m11",
-      "m12",
-      "m13",
-      "m14",
-      "m15"
-    ],
+    attendees: ["m19", "m7", "m10", "m21", "m22", "m25"],
     maxAttendees: 25
   },
   {
@@ -143,25 +125,9 @@ export const todayClasses: ClassData[] = [
     name: "MMA Striking",
     time: "14:30",
     endTime: "15:30",
-    tags: ["MMA", "BJJ"],
+    tags: ["MMA"],
     instructor: instructors[3],
-    attendees: [
-      "m1",
-      "m2",
-      "m3",
-      "m4",
-      "m5",
-      "m6",
-      "m7",
-      "m8",
-      "m9",
-      "m10",
-      "m11",
-      "m12",
-      "m13",
-      "m14",
-      "m15"
-    ],
+    attendees: ["m5", "m8", "m11", "m12", "m23"],
     maxAttendees: 30
   },
   {
@@ -171,23 +137,7 @@ export const todayClasses: ClassData[] = [
     endTime: "17:00",
     tags: ["BJJ"],
     instructor: instructors[4],
-    attendees: [
-      "m1",
-      "m2",
-      "m3",
-      "m4",
-      "m5",
-      "m6",
-      "m7",
-      "m8",
-      "m9",
-      "m10",
-      "m11",
-      "m12",
-      "m13",
-      "m14",
-      "m15"
-    ],
+    attendees: ["m14", "m15", "m18", "m2", "m3"],
     maxAttendees: 30
   },
   {
@@ -197,7 +147,7 @@ export const todayClasses: ClassData[] = [
     endTime: "18:30",
     tags: ["KIDS", "MMA"],
     instructor: instructors[5],
-    attendees: ["m6", "m9", "m13", "m14", "m15", "m2", "m3", "m7", "m8", "m10"],
+    attendees: ["m13", "m20", "m24", "m6"],
     maxAttendees: 20
   }
 ];
