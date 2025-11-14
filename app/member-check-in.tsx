@@ -147,7 +147,8 @@ export default function MemberCheckInScreen({route, navigation}: any) {
         `${member.name} has been checked in to ${selectedClass.name}.`,
         [
           {
-            text: "OK"
+            text: "OK",
+            onPress: () => navigation.navigate("Home")
           }
         ]
       );
@@ -198,7 +199,8 @@ export default function MemberCheckInScreen({route, navigation}: any) {
                 `${member.name} has been removed from ${selectedClass.name}.`,
                 [
                   {
-                    text: "OK"
+                    text: "OK",
+                    onPress: () => navigation.navigate("Home")
                   }
                 ]
               );
