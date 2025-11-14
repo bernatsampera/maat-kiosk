@@ -14,14 +14,27 @@ export default function MemberSearchScreen({navigation}: any) {
   const allMembers = useMemo(() => getAllMembers(), [getAllMembers]);
 
   const filteredMembers = useMemo(() => {
+    let members = allMembers;
+
     if (!searchQuery.trim()) {
-      return allMembers;
+      members = allMembers;
+    } else {
+      const query = searchQuery.toLowerCase();
+      members = allMembers.filter((member) =>
+        member.name.toLowerCase().includes(query)
+      );
     }
 
-    const query = searchQuery.toLowerCase();
-    return allMembers.filter((member) =>
-      member.name.toLowerCase().includes(query)
-    );
+    // Sort by belt rank (black to white)
+    const beltOrder = {
+      "black": 0,
+      "brown": 1,
+      "purple": 2,
+      "blue": 3,
+      "white": 4
+    };
+
+    return members.sort((a, b) => beltOrder[a.belt] - beltOrder[b.belt]);
   }, [allMembers, searchQuery]);
 
   const renderMember = ({item}: {item: Member}) => (

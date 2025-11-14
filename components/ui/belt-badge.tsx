@@ -4,7 +4,7 @@ import {Text} from "@/components/ui/text";
 import {cn} from "@/lib/utils";
 
 const beltColors = {
-  white: "bg-gray-400 text-white",
+  white: "bg-gray-200 text-black",
   blue: "bg-blue-400 text-white",
   purple: "bg-purple-400 text-white",
   brown: "bg-amber-800 text-white",
@@ -62,15 +62,19 @@ const BeltBadge = React.forwardRef<View, BeltBadgeProps>(
         )}
         {...props}
       >
-        <Text className={cn("font-medium capitalize", textSizeClasses[size])}>
+        <Text
+          className={cn(
+            "font-medium capitalize",
+            textSizeClasses[size],
+            beltColorClass
+          )}
+        >
           {belt}
         </Text>
       </View>
     );
   }
 );
-
-BeltBadge.displayName = "BeltBadge";
 
 export {BeltBadge, beltColors};
 export type {BeltBadgeProps, BeltColor};
