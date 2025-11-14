@@ -160,10 +160,7 @@ export const todayClasses: ClassData[] = [
       "m12",
       "m13",
       "m14",
-      "m15",
-      "m2",
-      "m3",
-      "m4"
+      "m15"
     ],
     maxAttendees: 30
   },
@@ -189,12 +186,7 @@ export const todayClasses: ClassData[] = [
       "m12",
       "m13",
       "m14",
-      "m15",
-      "m2",
-      "m3",
-      "m4",
-      "m5",
-      "m6"
+      "m15"
     ],
     maxAttendees: 30
   },

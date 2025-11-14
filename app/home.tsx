@@ -17,7 +17,7 @@ import {
 import {Users, User, Info} from "lucide-react-native";
 
 export default function HomeScreen({navigation}: any) {
-  const { classes: todayClasses } = useGym();
+  const {classes: todayClasses} = useGym();
 
   return (
     <ScrollView className="flex-1 bg-background">
@@ -81,8 +81,8 @@ export default function HomeScreen({navigation}: any) {
             // CRITICAL FIX: This prevents the FlatList from trying to scroll
             // independently inside the ScrollView, fixing layout issues.
             scrollEnabled={false}
-            columnWrapperStyle={{gap: 16}}
-            contentContainerStyle={{gap: 16}}
+            columnWrapperStyle={{gap: 24}}
+            contentContainerStyle={{gap: 24}}
             renderItem={({item}) => (
               <TouchableOpacity
                 className="flex-1"
