@@ -43,7 +43,7 @@ const ClassCard = React.forwardRef<View, ClassCardProps>(
     const cardClassName = cn(
       sizeClasses[size],
       isSelected && "border-primary border-2",
-      isCheckedIn && "border-green-400 bg-green-50 border-2",
+      isCheckedIn && "border-primary bg-green-50 border-2",
       "rounded-xl",
       className
     );
