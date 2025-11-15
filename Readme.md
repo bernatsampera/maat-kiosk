@@ -54,4 +54,83 @@ Would also check if it's possible to remove the rn-primitives library and do wha
 
 ## Running the App
 
-[Step-by-step instructions]
+### Prerequisites
+
+- **Node.js** (v18 or higher)
+- **Python** (v3.12 or higher)
+- **uv** (Python package manager) - [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+- **Expo Go** app on your iOS/Android device (for mobile testing)
+- **Xcode** (for iOS simulator)
+- **Android Studio** (for Android emulator - optional)
+
+### Quick Start
+
+1. **Clone and setup:**
+
+   ```bash
+   git clone <repository-url>
+   cd maat-kiosk
+   make setup
+   ```
+
+2. **Start development servers:**
+
+   ```bash
+   make dev
+   ```
+
+3. **Run on device/simulator:**
+   - Open Expo Go app and scan the QR code
+   - Or run `make ios` for iOS simulator
+   - Or run `make android` for Android emulator
+
+### Detailed Setup
+
+#### Backend Setup
+
+Option 1: Using uv (recommended):
+
+```bash
+make setup-backend-deps
+make dev-backend
+```
+
+Option 2: Manual setup:
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -e .
+PYTHONPATH=. uvicorn src.main:app --reload
+```
+
+#### Frontend Setup
+
+```bash
+make setup-frontend-deps
+make dev-frontend
+```
+
+Or manually:
+
+```bash
+cd frontend
+npm install
+npx expo start --port 8082
+```
+
+### Available Commands
+
+- `make setup` - Setup both backend and frontend
+- `make dev` - Start both development servers
+- `make dev-backend` - Start only backend server
+- `make dev-frontend` - Start only frontend server
+- `make ios` - Run on iOS simulator
+- `make android` - Run on Android emulator
+- `make clean` - Clean all dependencies and caches
+
+### Environment Setup
+
+Backend will run on `http://localhost:8000`
+Frontend will run on `http://localhost:8082`
