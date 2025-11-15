@@ -36,12 +36,4 @@ class ChatRequest(BaseModel):
     message: str
 
 
-@app.post("/chat")
-async def chat(request: ChatRequest):
-    """Stream conversation updates for a specific thread using basic graph."""
-    print("message", request.message)
-
-    return {"status": "ok"}
-
-
 app.include_router(chat_router)
