@@ -4,7 +4,6 @@
 
 [![Watch the Demo](https://img.youtube.com/vi/lXIFUxUOSeI/hqdefault.jpg)](https://www.youtube.com/embed/lXIFUxUOSeI)
 
-
 ## Architecture
 
 The app has two parts. backend and fronted. The backend is just there to server a langgraph graph and is used in the check in mat function of the app in the frontend, all of the other functions work without the backend.
@@ -49,13 +48,15 @@ I considered implementing some of the optional stuff like the lock in or the qr 
 
 Also depriorised testing the app on Android and focused on ios. Have done mostly web in the past and to set up ios was tedious enough.
 
-I priorised instead the AI Check In Chat as it's I'm currently working on and, though the current version is just an example that it would require much more functionalities, it shows the capabilities of what can be done with Generative AI and a possible use for Maat.
+I priorised a bit the AI Check In Chat as it's I'm currently working on and, though the current version is just an example that it would require much more functionalities, it shows the capabilities of what can be done with Generative AI and a possible use for Maat.
 
 ## Future Improvements
 
 For a production grade app I'd probably throw everything away and give much more though on the components like class-card that are reused in multiple places. As they are now are usable, but could be more intuitive for the users.
 
 Would also check if it's possible to remove the rn-primitives library and do what it does in some other way. I'd investigate a bit further what are the best practices in react-native development, maybe decide to keep if it makes sense.
+
+I though a bit on edge cases and error handling but as we are using json it didn't seem that there were many ways for the app to crash, or at least I haven't found them, but would be nice to go a bit deeper onto this to analyse possible errors.
 
 ## Running the App
 
