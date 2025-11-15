@@ -1,4 +1,4 @@
-.PHONY: setup setup-backend setup-backend-deps setup-frontend setup-frontend-deps dev dev-backend dev-frontend clean
+.PHONY: setup setup-backend setup-backend-deps setup-frontend setup-frontend-deps dev-backend dev-frontend clean
 
 # Setup everything
 setup: setup-backend setup-frontend
@@ -6,10 +6,10 @@ setup: setup-backend setup-frontend
 # Setup backend
 setup-backend:
 	@ echo "Setting up backend..."
-	@ cd backend && python -m venv .venv 2>/dev/null || true
-	@ cd backend && .venv/bin/pip install --upgrade pip
-	@ cd backend && .venv/bin/pip install -e .
+	@ cd backend && uv sync
+	@ cd backend && cp .env.example .env 2>/dev/null || true
 	@ echo "Backend setup complete"
+	@ echo "Remember to update backend/.env with your API keys"
 
 # Setup backend with uv (recommended)
 setup-backend-deps:
@@ -21,7 +21,9 @@ setup-backend-deps:
 setup-frontend:
 	@ echo "Setting up frontend..."
 	@ cd frontend && npm install
+	@ cd frontend && cp .env.example .env 2>/dev/null || true
 	@ echo "Frontend setup complete"
+	@ echo "Remember to update frontend/.env with your backend API URL"
 
 # Setup frontend dependencies only
 setup-frontend-deps:
@@ -29,8 +31,6 @@ setup-frontend-deps:
 	@ cd frontend && npm install
 	@ echo "Frontend dependencies installed"
 
-# Start development servers (both backend and frontend)
-dev: dev-backend dev-frontend
 
 # Start backend development server
 dev-backend:
@@ -38,7 +38,7 @@ dev-backend:
 
 # Start frontend development server
 dev-frontend:
-	@ cd frontend && npx expo start --port 8082
+	@ cd frontend && npx expo start --port 8081
 
 # Start iOS simulator
 ios:

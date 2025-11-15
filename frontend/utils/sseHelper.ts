@@ -9,7 +9,7 @@ export interface StreamMessage {
 }
 
 export class SSEHelper {
-  private static baseUrl = "http://localhost:8000";
+  private static baseUrl = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
 
   static async streamChat(
     threadId: string,

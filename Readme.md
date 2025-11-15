@@ -62,6 +62,7 @@ Would also check if it's possible to remove the rn-primitives library and do wha
 - **Expo Go** app on your iOS/Android device (for mobile testing)
 - **Xcode** (for iOS simulator)
 - **Android Studio** (for Android emulator - optional)
+- **Google AI Studio API Key** (for backend AI functionality)
 
 ### Quick Start
 
@@ -73,15 +74,32 @@ Would also check if it's possible to remove the rn-primitives library and do wha
    make setup
    ```
 
-2. **Start development servers:**
+2. **Configure environment variables:**
+
+   Copy the environment files and configure them:
 
    ```bash
-   make dev
+   cp backend/.env.example backend/.env
+   cp frontend/.env.example frontend/.env
+   # Edit backend/.env to add your API keys
+   # Edit frontend/.env to set your backend API URL
    ```
 
-3. **Run on device/simulator:**
+3. **Start development servers:**
+
+   Start both servers separately in different terminals:
+
+   ```bash
+   # Terminal 1 - Backend
+   make dev-backend
+
+   # Terminal 2 - Frontend
+   make ios
+   ```
+
+4. **Run on device/simulator:**
    - Open Expo Go app and scan the QR code
-   - Or run `make ios` for iOS simulator
+   - Or run `make dev-frontend` for web dev (Alerts do not work there :o )
    - Or run `make android` for Android emulator
 
 ### Detailed Setup
@@ -99,33 +117,43 @@ Option 2: Manual setup:
 
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -e .
-PYTHONPATH=. uvicorn src.main:app --reload
+cp .env.example .env
+# Edit .env to add your API keys
+uv sync
+PYTHONPATH=. uv run uvicorn src.main:app --reload
 ```
 
 #### Frontend Setup
 
-```bash
-make setup-frontend-deps
-make dev-frontend
-```
+1. **Setup environment variables:**
+
+   ```bash
+   cp frontend/.env.example frontend/.env
+   # Edit frontend/.env to set your backend API URL
+   ```
+
+2. **Install dependencies and start:**
+
+   ```bash
+   make setup-frontend-deps
+   make dev-frontend
+   ```
 
 Or manually:
 
 ```bash
 cd frontend
+cp .env.example .env
+# Edit .env to set your backend API URL
 npm install
-npx expo start --port 8082
+npx expo start --port 8081
 ```
 
 ### Available Commands
 
 - `make setup` - Setup both backend and frontend
-- `make dev` - Start both development servers
-- `make dev-backend` - Start only backend server
-- `make dev-frontend` - Start only frontend server
+- `make dev-backend` - Start backend server
+- `make dev-frontend` - Start frontend server
 - `make ios` - Run on iOS simulator
 - `make android` - Run on Android emulator
 - `make clean` - Clean all dependencies and caches
@@ -133,4 +161,4 @@ npx expo start --port 8082
 ### Environment Setup
 
 Backend will run on `http://localhost:8000`
-Frontend will run on `http://localhost:8082`
+Frontend will run on `http://localhost:8081`
