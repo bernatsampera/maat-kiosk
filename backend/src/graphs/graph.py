@@ -1,5 +1,6 @@
 from typing import Annotated, TypedDict
 
+from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import BaseMessage
 from langchain_core.tools import tool
@@ -9,8 +10,12 @@ from langgraph.graph.message import add_messages
 from langgraph.types import interrupt
 from pydantic import BaseModel
 
+load_dotenv()
+
+
 # Initialize the Chat Model
-model = init_chat_model("ollama:granite4:micro", temperature=0.25)
+# model = init_chat_model("ollama:granite4:micro", temperature=0.25)
+model = init_chat_model("google_genai:gemini-2.5-flash-lite")
 
 
 # Define state schema
