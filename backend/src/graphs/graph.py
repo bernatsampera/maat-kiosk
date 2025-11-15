@@ -2,9 +2,12 @@ from typing import Annotated, TypedDict
 
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import BaseMessage
+from langchain_core.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
+from langgraph.types import interrupt
+from pydantic import BaseModel
 
 # Initialize the Chat Model
 model = init_chat_model("ollama:granite4:micro", temperature=0.25)
@@ -15,9 +18,36 @@ class State(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
 
 
+class CheckInDetails(BaseModel):
+    memberName: str
+    className: str
+
+
+@tool(description="Tool to check in a student to a class. Args: memberName, className")
+def check_in_mat(checkInDetails: CheckInDetails) -> str:
+    """"""
+    res = interrupt({"check_in_details": checkInDetails})
+
+    return f"Student check in : {res}"
+
+
+system_prompt = """
+Your objective is to call the check_in_mat tool with the correct parameters to check in a student to a class.
+
+The tool requires:
+- memberName: The name of the student to check in
+- className: The name of the class they're checking in to
+
+Details about all available classes and students will be provided in the last message of the conversation. Extract the appropriate member_name and class_name from that information and call the check_in_mat tool with those parameters.
+"""
+
+
 # Define the node function
 def call_model(state: State):
-    response = model.invoke(state["messages"])
+    tools_model = model.bind_tools([check_in_mat])
+    response = tools_model.invoke(state["messages"])
+
+    response = tools_model.invoke(state["messages"])
     return {"messages": [response]}
 
 

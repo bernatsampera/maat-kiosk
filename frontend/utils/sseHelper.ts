@@ -1,9 +1,11 @@
 import {parseResponse} from "../lib/bleakai";
 
 export interface StreamMessage {
-  type: "human" | "ai" | "error";
+  type: "human" | "ai" | "tool_call" | "error";
   content: string;
   error?: string;
+  toolName?: string;
+  toolArgs?: any;
 }
 
 export class SSEHelper {
@@ -18,10 +20,11 @@ export class SSEHelper {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "text/event-stream",
+          Accept: "text/event-stream"
         },
-        body: JSON.stringify({input}),
+        body: JSON.stringify({input})
       });
+      console.log("response", response);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,14 +40,29 @@ export class SSEHelper {
         const data = line.substring(6);
         try {
           const parsedData = JSON.parse(data);
+          console.log("parsedData", parsedData);
 
           if (parsedData.type === "done") break;
 
           for (const event of parseResponse(parsedData)) {
+            console.log("event", event);
             if (event.type === "input" && event.content?.trim()) {
               messages.push({
                 type: "ai",
                 content: event.content
+              });
+            } else if (event.type === "tool_call") {
+              messages.push({
+                type: "tool_call",
+                content: "",
+                toolName: event.toolName,
+                toolArgs: event.toolArgs
+              });
+            } else if (event.type === "error") {
+              messages.push({
+                type: "error",
+                content: "",
+                error: event.error || "Unknown tool error"
               });
             }
           }
@@ -56,11 +74,13 @@ export class SSEHelper {
 
       return messages;
     } catch (error: any) {
-      return [{
-        type: "error",
-        content: "",
-        error: error.message || "Unknown error occurred"
-      }];
+      return [
+        {
+          type: "error",
+          content: "",
+          error: error.message || "Unknown error occurred"
+        }
+      ];
     }
   }
 

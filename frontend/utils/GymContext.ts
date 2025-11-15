@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Member, Instructor, ClassData, members, instructors, todayClasses } from '@/data/gymData';
-
+import {instructors, members, todayClasses} from "@/data/gymData";
+import type {ClassData, Instructor, Member} from "@/types/gym";
+import React, {createContext, ReactNode, useContext, useState} from "react";
 interface GymContextType {
   // State
   classes: ClassData[];
@@ -21,14 +21,14 @@ interface GymProviderProps {
   children: ReactNode;
 }
 
-export function GymProvider({ children }: GymProviderProps) {
+export function GymProvider({children}: GymProviderProps) {
   const [classes, setClasses] = useState<ClassData[]>(todayClasses);
   const [membersList] = useState<Member[]>(members);
   const [instructorsList] = useState<Instructor[]>(instructors);
 
   const checkInMember = async (classId: string, memberId: string) => {
-    setClasses(prevClasses =>
-      prevClasses.map(cls => {
+    setClasses((prevClasses) =>
+      prevClasses.map((cls) => {
         if (cls.id === classId) {
           // Check if member is already checked in
           if (cls.attendees.includes(memberId)) {
@@ -46,13 +46,13 @@ export function GymProvider({ children }: GymProviderProps) {
   };
 
   const removeMemberFromClass = async (classId: string, memberId: string) => {
-    setClasses(prevClasses =>
-      prevClasses.map(cls => {
+    setClasses((prevClasses) =>
+      prevClasses.map((cls) => {
         if (cls.id === classId) {
           // Remove member from attendees
           return {
             ...cls,
-            attendees: cls.attendees.filter(id => id !== memberId)
+            attendees: cls.attendees.filter((id) => id !== memberId)
           };
         }
         return cls;
@@ -61,16 +61,16 @@ export function GymProvider({ children }: GymProviderProps) {
   };
 
   const getCheckedInMembers = (classId: string): Member[] => {
-    const classData = classes.find(cls => cls.id === classId);
+    const classData = classes.find((cls) => cls.id === classId);
     if (!classData) return [];
 
     return classData.attendees
-      .map(memberId => membersList.find(member => member.id === memberId))
+      .map((memberId) => membersList.find((member) => member.id === memberId))
       .filter((member): member is Member => member !== undefined);
   };
 
   const getClassById = (id: string): ClassData | undefined => {
-    return classes.find(cls => cls.id === id);
+    return classes.find((cls) => cls.id === id);
   };
 
   const getAllMembers = (): Member[] => {
@@ -85,20 +85,16 @@ export function GymProvider({ children }: GymProviderProps) {
     removeMemberFromClass,
     getCheckedInMembers,
     getClassById,
-    getAllMembers,
+    getAllMembers
   };
 
-  return React.createElement(
-    GymContext.Provider,
-    { value },
-    children
-  );
+  return React.createElement(GymContext.Provider, {value}, children);
 }
 
 export function useGym(): GymContextType {
   const context = useContext(GymContext);
   if (context === undefined) {
-    throw new Error('useGym must be used within a GymProvider');
+    throw new Error("useGym must be used within a GymProvider");
   }
   return context;
 }

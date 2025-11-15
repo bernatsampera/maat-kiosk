@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
 import {SSEHelper, StreamMessage} from "@/utils/sseHelper";
 import React, {useCallback, useState} from "react";
-import {FlatList, Text, TextInput, View, Alert} from "react-native";
+import {Alert, FlatList, Text, TextInput, View} from "react-native";
 
 export default function CheckInChat() {
   const {messages, inputText, isLoading, setInputText, handleSendMessage} =
@@ -14,7 +14,8 @@ export default function CheckInChat() {
           How to check in a member:
         </Text>
         <Text className="text-xs text-muted-foreground">
-          Example: "Check in Riley Garcia at the BJJ / Grappling class today at 10:00"
+          Example: "Check in Riley Garcia at the BJJ / Grappling class today at
+          10:00"
         </Text>
       </View>
 
@@ -31,9 +32,23 @@ export default function CheckInChat() {
             } mb-2`}
           >
             {item.type === "error" ? (
-              <Text className="text-sm text-red-500">
-                Error: {item.error}
-              </Text>
+              <Text className="text-sm text-red-500">Error: {item.error}</Text>
+            ) : item.type === "tool_call" ? (
+              <View>
+                <Text className="text-sm font-medium text-card-foreground mb-2">
+                  🔧 {item.toolName}
+                </Text>
+                {item.toolArgs?.checkInDetails && (
+                  <View className="bg-background/50 rounded p-2">
+                    <Text className="text-xs text-card-foreground">
+                      Member: {item.toolArgs.checkInDetails.memberName}
+                    </Text>
+                    <Text className="text-xs text-card-foreground">
+                      Class: {item.toolArgs.checkInDetails.className}
+                    </Text>
+                  </View>
+                )}
+              </View>
             ) : (
               <Text
                 className={`text-sm ${
@@ -85,10 +100,14 @@ function useChatHandler() {
     setIsLoading(true);
 
     try {
+      console.log("currentInput", currentInput);
+
       const aiMessages = await SSEHelper.streamChat(threadId, currentInput);
+      console.log("aiMessages", aiMessages);
       setMessages((prev) => [...prev, ...aiMessages]);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       Alert.alert("Error", errorMessage);
       const errorStream: StreamMessage = {
         type: "error",
