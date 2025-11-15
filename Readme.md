@@ -69,7 +69,7 @@ Would also check if it's possible to remove the rn-primitives library and do wha
 1. **Clone and setup:**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/bernatsampera/maat-kiosk
    cd maat-kiosk
    make setup
    ```
