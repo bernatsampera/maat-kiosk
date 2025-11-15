@@ -22,9 +22,13 @@ export default function CheckInChat() {
         <Text className="text-sm font-medium text-foreground mb-2">
           How to check in a member:
         </Text>
+        <Text className="text-sm">
+          Example: Check in Riley Garcia at the BJJ / Grappling class today.
+        </Text>
+
         <Text className="text-xs text-muted-foreground">
-          Example: "Check in Riley Garcia at the BJJ / Grappling class today at
-          10:00"
+          Also works with fuzzy matching if the member or class name is
+          misspelled
         </Text>
       </View>
 
@@ -86,7 +90,7 @@ export default function CheckInChat() {
                   ? response.message || "Check-in completed successfully!"
                   : `Error: ${response.message || "Check-in failed"}`
               };
-              setMessages(prev => [...prev, responseMessage]);
+              setMessages((prev) => [...prev, responseMessage]);
 
               // Clear the pending tool call to re-enable chat
               setPendingToolCall(null);
