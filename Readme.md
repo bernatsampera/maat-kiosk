@@ -1,5 +1,10 @@
 # Gym Kiosk - Bernat Sampera
 
+## Demo
+
+[![Watch the Demo](https://img.youtube.com/vi/lXIFUxUOSeI/hqdefault.jpg)](https://www.youtube.com/embed/lXIFUxUOSeI)
+
+
 ## Architecture
 
 The app has two parts. backend and fronted. The backend is just there to server a langgraph graph and is used in the check in mat function of the app in the frontend, all of the other functions work without the backend.
