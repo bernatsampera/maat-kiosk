@@ -2,9 +2,11 @@
 
 import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
-import React, {useState} from "react";
-import {Alert, Text, View} from "react-native";
+import type {ClassData, Member} from "@/types/gym";
 import {useGym} from "@/utils/GymContext";
+import {findEnhancedMatch, FuzzyMatch} from "@/utils/fuzzyMatch";
+import React, {useEffect, useState} from "react";
+import {Alert, Text, View} from "react-native";
 
 interface CheckInDetails {
   memberName: string;
@@ -17,7 +19,11 @@ interface CheckInMatToolProps {
   args: {
     checkInDetails: CheckInDetails;
   };
-  onResponse?: (response: { action: string; success: boolean; message?: string }) => void;
+  onResponse?: (response: {
+    action: string;
+    success: boolean;
+    message?: string;
+  }) => void;
 }
 
 export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
@@ -26,46 +32,83 @@ export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Fuzzy matching states
+  const [memberMatch, setMemberMatch] = useState<FuzzyMatch<Member> | null>(
+    null
+  );
+  const [classMatch, setClassMatch] = useState<FuzzyMatch<ClassData> | null>(
+    null
+  );
+  const [isValidated, setIsValidated] = useState(false);
+
+  // Perform fuzzy matching when component loads or details change
+  useEffect(() => {
+    if (checkInDetails?.memberName && checkInDetails?.className) {
+      const members = getAllMembers();
+
+      // Find fuzzy match for member
+      const foundMember = findEnhancedMatch(
+        checkInDetails.memberName,
+        members,
+        (member) => member.name,
+        60 // Minimum confidence score
+      );
+      setMemberMatch(foundMember);
+
+      // Find fuzzy match for class
+      const foundClass = findEnhancedMatch(
+        checkInDetails.className,
+        classes,
+        (cls) => cls.name,
+        60 // Minimum confidence score
+      );
+      setClassMatch(foundClass);
+
+      setIsValidated(true);
+    }
+  }, [checkInDetails, getAllMembers, classes]);
+
   const handleConfirm = async () => {
     if (submitted || isSubmitting) return;
 
     setIsSubmitting(true);
 
     try {
-      // Find the member by name if memberId is not provided
-      let memberId = checkInDetails.memberId;
-      if (!memberId) {
-        const members = getAllMembers();
-        const member = members.find(m =>
-          m.name.toLowerCase() === checkInDetails.memberName.toLowerCase()
+      // Use fuzzy match results or fall back to original IDs
+      let memberId = checkInDetails.memberId ?? "";
+      let classId = checkInDetails.classId ?? "";
+      let actualMemberName = checkInDetails.memberName;
+      let actualClassName = checkInDetails.className;
+
+      if (!memberId && memberMatch) {
+        memberId = memberMatch.item.id;
+        actualMemberName = memberMatch.item.name;
+      } else if (!memberId && !memberMatch) {
+        throw new Error(
+          `Member "${checkInDetails.memberName}" not found (no good matches found)`
         );
-        if (!member) {
-          throw new Error(`Member "${checkInDetails.memberName}" not found`);
-        }
-        memberId = member.id;
       }
 
-      // Find the class by name if classId is not provided
-      let classId = checkInDetails.classId;
-      if (!classId) {
-        const classData = classes.find(cls =>
-          cls.name.toLowerCase() === checkInDetails.className.toLowerCase()
+      if (!classId && classMatch) {
+        classId = classMatch.item.id;
+        actualClassName = classMatch.item.name;
+      } else if (!classId && !classMatch) {
+        throw new Error(
+          `Class "${checkInDetails.className}" not found (no good matches found)`
         );
-        if (!classData) {
-          throw new Error(`Class "${checkInDetails.className}" not found`);
-        }
-        classId = classData.id;
       }
 
       // Check if member is already checked in to this class
       const checkedInMembers = getCheckedInMembers(classId);
-      const isAlreadyCheckedIn = checkedInMembers.some((m) => m.id === memberId);
+      const isAlreadyCheckedIn = checkedInMembers.some(
+        (m) => m.id === memberId
+      );
 
       if (isAlreadyCheckedIn) {
         // Show already checked in alert
         Alert.alert(
           "Already Checked In",
-          `${checkInDetails.memberName} is already checked in to ${checkInDetails.className}.`,
+          `${actualMemberName} is already checked in to ${actualClassName}.`,
           [{text: "OK"}]
         );
         setSubmitted(false);
@@ -81,7 +124,7 @@ export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
       // Show success alert
       Alert.alert(
         "Success!",
-        `${checkInDetails.memberName} has been checked in to ${checkInDetails.className}.`,
+        `${actualMemberName} has been checked in to ${actualClassName}.`,
         [
           {
             text: "OK",
@@ -90,15 +133,15 @@ export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
               onResponse?.({
                 action: "confirm",
                 success: true,
-                message: `Successfully checked in ${checkInDetails.memberName} to ${checkInDetails.className}`
+                message: `Successfully checked in ${actualMemberName} to ${actualClassName}`
               });
             }
           }
         ]
       );
-
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to confirm check-in";
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to confirm check-in";
       Alert.alert("Error", errorMessage);
 
       // Send error response
@@ -127,9 +170,9 @@ export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
         success: true,
         message: rejectMessage
       });
-
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to reject check-in";
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to reject check-in";
       Alert.alert("Error", errorMessage);
 
       // Send error response
@@ -163,21 +206,142 @@ export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
               Suggested Check-in Details:
             </Text>
 
-            <View className="space-y-2">
-              <View className="flex-row justify-between items-center">
-                <Text className="text-sm text-muted-foreground">Student:</Text>
-                <Text className="text-sm font-medium text-card-foreground">
-                  {checkInDetails?.memberName || "Unknown"}
-                </Text>
+            <View className="space-y-3">
+              {/* Member Information */}
+              <View className="space-y-1">
+                <View className="flex-row justify-between items-center">
+                  <Text className="text-sm text-muted-foreground">
+                    Student:
+                  </Text>
+                  <View className="flex-row items-center gap-2">
+                    <Text className="text-sm font-medium text-card-foreground">
+                      {memberMatch
+                        ? memberMatch.item.name
+                        : checkInDetails?.memberName || "Unknown"}
+                    </Text>
+                    {memberMatch && (
+                      <View
+                        className={`px-2 py-1 rounded-full ${
+                          memberMatch.score >= 90
+                            ? "bg-green-100"
+                            : memberMatch.score >= 75
+                              ? "bg-yellow-100"
+                              : "bg-orange-100"
+                        }`}
+                      >
+                        <Text
+                          className={`text-xs font-medium ${
+                            memberMatch.score >= 90
+                              ? "text-green-700"
+                              : memberMatch.score >= 75
+                                ? "text-yellow-700"
+                                : "text-orange-700"
+                          }`}
+                        >
+                          {memberMatch.score}%
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                </View>
+
+                {/* Show match confidence details */}
+                {memberMatch && memberMatch.score < 90 && (
+                  <Text className="text-xs text-muted-foreground ml-auto">
+                    AI suggested: "{checkInDetails?.memberName}"
+                  </Text>
+                )}
+
+                {/* Show member belt level if matched */}
+                {memberMatch && (
+                  <View className="flex-row justify-between items-center">
+                    <Text className="text-xs text-muted-foreground">
+                      Belt Level:
+                    </Text>
+                    <Text className="text-xs font-medium text-card-foreground capitalize">
+                      {memberMatch.item.belt}
+                    </Text>
+                  </View>
+                )}
               </View>
 
-              <View className="flex-row justify-between items-center">
-                <Text className="text-sm text-muted-foreground">Class:</Text>
-                <Text className="text-sm font-medium text-card-foreground">
-                  {checkInDetails?.className || "Unknown"}
-                </Text>
+              {/* Class Information */}
+              <View className="space-y-1">
+                <View className="flex-row justify-between items-center">
+                  <Text className="text-sm text-muted-foreground">Class:</Text>
+                  <View className="flex-row items-center gap-2">
+                    <Text className="text-sm font-medium text-card-foreground">
+                      {classMatch
+                        ? classMatch.item.name
+                        : checkInDetails?.className || "Unknown"}
+                    </Text>
+                    {classMatch && (
+                      <View
+                        className={`px-2 py-1 rounded-full ${
+                          classMatch.score >= 90
+                            ? "bg-green-100"
+                            : classMatch.score >= 75
+                              ? "bg-yellow-100"
+                              : "bg-orange-100"
+                        }`}
+                      >
+                        <Text
+                          className={`text-xs font-medium ${
+                            classMatch.score >= 90
+                              ? "text-green-700"
+                              : classMatch.score >= 75
+                                ? "text-yellow-700"
+                                : "text-orange-700"
+                          }`}
+                        >
+                          {classMatch.score}%
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                </View>
+
+                {/* Show match confidence details */}
+                {classMatch && classMatch.score < 90 && (
+                  <Text className="text-xs text-muted-foreground ml-auto">
+                    AI suggested: "{checkInDetails?.className}"
+                  </Text>
+                )}
+
+                {/* Show class time and instructor if matched */}
+                {classMatch && (
+                  <>
+                    <View className="flex-row justify-between items-center">
+                      <Text className="text-xs text-muted-foreground">
+                        Time:
+                      </Text>
+                      <Text className="text-xs font-medium text-card-foreground">
+                        {classMatch.item.time} - {classMatch.item.endTime}
+                      </Text>
+                    </View>
+                    <View className="flex-row justify-between items-center">
+                      <Text className="text-xs text-muted-foreground">
+                        Instructor:
+                      </Text>
+                      <Text className="text-xs font-medium text-card-foreground">
+                        {classMatch.item.instructor.name}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
             </View>
+
+            {/* Validation Status */}
+            {isValidated && (!memberMatch || !classMatch) && (
+              <View className="mt-3 p-2 bg-red-50 border border-red-200 rounded">
+                <Text className="text-xs text-red-700">
+                  ⚠️ Unable to find matches for: {!memberMatch ? "Student" : ""}
+                  {!memberMatch && !classMatch ? " and " : ""}
+                  {!classMatch ? "Class" : ""}
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Action Buttons */}
@@ -188,10 +352,16 @@ export const CheckInMatTool = ({args, onResponse}: CheckInMatToolProps) => {
                   onPress={handleConfirm}
                   className="w-full"
                   size="lg"
-                  disabled={isSubmitting}
+                  disabled={
+                    isSubmitting || !isValidated || !memberMatch || !classMatch
+                  }
                 >
                   <Text className="text-sm font-medium text-primary-foreground">
-                    {isSubmitting ? "Processing..." : "✓ Confirm Check-in"}
+                    {isSubmitting
+                      ? "Processing..."
+                      : !isValidated || !memberMatch || !classMatch
+                        ? "⚠️ Cannot Check-in"
+                        : "✓ Confirm Check-in"}
                   </Text>
                 </Button>
 
