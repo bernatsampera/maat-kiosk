@@ -24,7 +24,6 @@ export class SSEHelper {
         },
         body: JSON.stringify({input})
       });
-      console.log("response", response);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -40,12 +39,10 @@ export class SSEHelper {
         const data = line.substring(6);
         try {
           const parsedData = JSON.parse(data);
-          console.log("parsedData", parsedData);
 
           if (parsedData.type === "done") break;
 
           for (const event of parseResponse(parsedData)) {
-            console.log("event", event);
             if (event.type === "input" && event.content?.trim()) {
               messages.push({
                 type: "ai",

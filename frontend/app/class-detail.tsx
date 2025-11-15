@@ -1,28 +1,20 @@
 // app/class-detail.tsx
-import {
-  View,
-  Text,
-  Button,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-  Alert
-} from "react-native";
-import {Card, CardContent} from "@/components/ui/card";
 import {Avatar} from "@/components/ui/avatar-custom";
 import {Badge} from "@/components/ui/badge";
 import {BeltBadge} from "@/components/ui/belt-badge";
+import {Card, CardContent} from "@/components/ui/card";
 import {EmptyState} from "@/components/ui/empty-state";
 import {useGym} from "@/utils/GymContext";
-import {ClassData, Member} from "@/types/gym";
+import {CheckCircle, Clock, Plus, Users} from "lucide-react-native";
 import {
-  Users,
-  Clock,
-  ChevronLeft,
-  Plus,
-  CheckCircle,
-  AlertCircle
-} from "lucide-react-native";
+  Alert,
+  Button,
+  FlatList,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 
 export default function ClassDetailScreen({route, navigation}: any) {
   const {id} = route.params;
@@ -48,7 +40,6 @@ export default function ClassDetailScreen({route, navigation}: any) {
   );
 
   const handleCheckIn = (memberId: string) => {
-    console.log("Checking in member:", memberId);
     checkInMember(id, memberId);
     Alert.alert("Success", "Member checked in successfully!");
   };

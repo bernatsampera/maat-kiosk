@@ -147,10 +147,7 @@ function useChatHandler() {
     setIsLoading(true);
 
     try {
-      console.log("currentInput", currentInput);
-
       const aiMessages = await SSEHelper.streamChat(threadId, currentInput);
-      console.log("aiMessages", aiMessages);
 
       // Check for check_in_mat tool calls
       const checkInMatToolCall = aiMessages.find(
