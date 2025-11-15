@@ -13,6 +13,7 @@ import "../global.css";
 import {NAV_THEME} from "@/lib/theme";
 import {GymProvider} from "@/utils/GymContext";
 import CheckInChat from "./CheckInChat";
+import EventStreamTest from "./EventStreamTest";
 const Stack = createNativeStackNavigator();
 
 // setGlobalFontFamily();
@@ -54,6 +55,7 @@ export default function Layout() {
               component={MemberCheckInScreen}
             />
             <Stack.Screen name="CheckInChat" component={CheckInChat} />
+            <Stack.Screen name="EventStreamTest" component={EventStreamTest} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

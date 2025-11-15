@@ -34,6 +34,7 @@ async def create_graph_stream(
             ):
                 # Convert update to JSON and send as SSE
                 update_data = dumpd(update)
+                print("update", update)
                 yield f"data: {json.dumps(update_data)}\n\n"
 
             # Send completion event

@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   FlatList
 } from "react-native";
-import {Users, Info, BotMessageSquare} from "lucide-react-native";
+import {Users, Info, BotMessageSquare, Activity} from "lucide-react-native";
 
 export default function HomeScreen({navigation}: any) {
   const {classes: todayClasses} = useGym();
@@ -62,6 +62,29 @@ export default function HomeScreen({navigation}: any) {
             </CardContent>
           </Card>
         </TouchableOpacity>
+
+        {/* Event Stream Test Card */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("EventStreamTest")}
+          className="mb-6"
+        >
+          <Card className="overflow-hidden">
+            <CardContent className="p-4">
+              <View className="flex-row items-center justify-between">
+                <View className="flex-row items-center gap-3">
+                  <Activity size={20} className="text-primary" />
+                  <Text className="text-lg font-medium text-foreground">
+                    Event Stream Test
+                  </Text>
+                </View>
+                <Text className="text-sm text-muted-foreground">
+                  Test SSE connection to backend
+                </Text>
+              </View>
+            </CardContent>
+          </Card>
+        </TouchableOpacity>
+
         {/* Header Section */}
         <View className="mb-4">
           <Text className="text-sm text-muted-foreground mb-1 font-light tracking-wide">
