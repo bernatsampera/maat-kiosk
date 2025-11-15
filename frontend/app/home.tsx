@@ -1,19 +1,19 @@
 // app/home.tsx
-import {Text} from "@/components/ui/text";
-import {Card, CardContent} from "@/components/ui/card";
-import {AspectRatio} from "@/components/ui/aspect-ratio";
 import {Alert, AlertDescription} from "@/components/ui/alert";
+import {AspectRatio} from "@/components/ui/aspect-ratio";
+import {Card, CardContent} from "@/components/ui/card";
 import {ClassCard} from "@/components/ui/class-card";
+import {Text} from "@/components/ui/text";
 import {formatDate} from "@/data/gymData";
 import {useGym} from "@/utils/GymContext";
+import {BotMessageSquare, Info, Users} from "lucide-react-native";
 import {
-  ScrollView,
-  View,
+  FlatList,
   Image,
+  ScrollView,
   TouchableOpacity,
-  FlatList
+  View
 } from "react-native";
-import {Users, Info, BotMessageSquare, Activity} from "lucide-react-native";
 
 export default function HomeScreen({navigation}: any) {
   const {classes: todayClasses} = useGym();
@@ -63,28 +63,6 @@ export default function HomeScreen({navigation}: any) {
           </Card>
         </TouchableOpacity>
 
-        {/* Event Stream Test Card */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate("EventStreamTest")}
-          className="mb-6"
-        >
-          <Card className="overflow-hidden">
-            <CardContent className="p-4">
-              <View className="flex-row items-center justify-between">
-                <View className="flex-row items-center gap-3">
-                  <Activity size={20} className="text-primary" />
-                  <Text className="text-lg font-medium text-foreground">
-                    Event Stream Test
-                  </Text>
-                </View>
-                <Text className="text-sm text-muted-foreground">
-                  Test SSE connection to backend
-                </Text>
-              </View>
-            </CardContent>
-          </Card>
-        </TouchableOpacity>
-
         {/* Header Section */}
         <View className="mb-4">
           <Text className="text-sm text-muted-foreground mb-1 font-light tracking-wide">
@@ -96,7 +74,7 @@ export default function HomeScreen({navigation}: any) {
         </View>
 
         {/* Hero Banner */}
-        <Card className="mb-4 overflow-hidden rounded-2xl">
+        <Card className="mb-2 overflow-hidden rounded-2xl ">
           <AspectRatio ratio={16 / 9}>
             <View className="relative h-full w-full">
               <Image
@@ -106,7 +84,7 @@ export default function HomeScreen({navigation}: any) {
                 className="absolute inset-0 w-full h-full"
               />
               <View className="absolute inset-0 bg-black/70" />
-              <View className="absolute bottom-0 left-0 right-0 p-6">
+              <View className="absolute bottom-0 left-0 right-0 p-4">
                 <Text className="text-xs text-white/80 mb-1 uppercase tracking-wider font-semibold">
                   EXPERIENCES
                 </Text>
@@ -146,7 +124,7 @@ export default function HomeScreen({navigation}: any) {
                   navigation.navigate("ClassDetail", {id: item.id})
                 }
                 size="md"
-                className="flex-1"
+                className=" bg-gray-100 p-2 border-0"
               />
             )}
           />

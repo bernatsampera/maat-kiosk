@@ -1,12 +1,11 @@
-import {TextClassContext} from "@/components/ui/text";
+import {Text, TextClassContext} from "@/components/ui/text";
 import {cn} from "@/lib/utils";
 import {cva, type VariantProps} from "class-variance-authority";
 import * as React from "react";
-import {Platform, View, type ViewProps} from "react-native";
-import {Text} from "@/components/ui/text";
+import {View, type ViewProps} from "react-native";
 
 const badgeVariants = cva(
-  "flex-row items-center justify-center rounded-md px-2 py-1 text-sm font-medium",
+  "flex-row items-center justify-center rounded-md px-1 py-0.5 text-xs font-medium",
   {
     variants: {
       variant: {
@@ -18,16 +17,16 @@ const badgeVariants = cva(
         kids: "bg-pink-100 text-pink-800",
         yoga: "bg-blue-100 text-blue-800",
         mma: "bg-orange-100 text-orange-800",
-        bjj: "bg-green-100 text-green-800",
-      },
+        bjj: "bg-green-100 text-green-800"
+      }
     },
     defaultVariants: {
-      variant: "default",
-    },
+      variant: "default"
+    }
   }
 );
 
-const badgeTextVariants = cva("text-sm font-medium", {
+const badgeTextVariants = cva("text-xs font-medium", {
   variants: {
     variant: {
       default: "text-primary-foreground",
@@ -38,12 +37,12 @@ const badgeTextVariants = cva("text-sm font-medium", {
       kids: "text-pink-800",
       yoga: "text-blue-800",
       mma: "text-orange-800",
-      bjj: "text-green-800",
-    },
+      bjj: "text-green-800"
+    }
   },
   defaultVariants: {
-    variant: "default",
-  },
+    variant: "default"
+  }
 });
 
 type BadgeProps = ViewProps &

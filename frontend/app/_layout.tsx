@@ -2,18 +2,16 @@
 import {NavigationContainer, ThemeProvider} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 // import DetailScreen from "./detail";
-import HomeScreen from "./home";
-import ClassDetailScreen from "./class-detail";
-import MemberSearchScreen from "./member-search";
-import MemberCheckInScreen from "./member-check-in";
-import {useFonts} from "expo-font";
-import {useEffect} from "react";
-import {setGlobalFontFamily} from "@/lib/globalFont";
-import "../global.css";
 import {NAV_THEME} from "@/lib/theme";
 import {GymProvider} from "@/utils/GymContext";
+import {useFonts} from "expo-font";
+import {useEffect} from "react";
+import "../global.css";
 import CheckInChat from "./CheckInChat";
-import EventStreamTest from "./EventStreamTest";
+import ClassDetailScreen from "./class-detail";
+import HomeScreen from "./home";
+import MemberCheckInScreen from "./member-check-in";
+import MemberSearchScreen from "./member-search";
 const Stack = createNativeStackNavigator();
 
 // setGlobalFontFamily();
@@ -55,7 +53,6 @@ export default function Layout() {
               component={MemberCheckInScreen}
             />
             <Stack.Screen name="CheckInChat" component={CheckInChat} />
-            <Stack.Screen name="EventStreamTest" component={EventStreamTest} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

@@ -1,23 +1,24 @@
+import {Text} from "@/components/ui/text";
 import {cn} from "@/lib/utils";
 import {cva, type VariantProps} from "class-variance-authority";
-import {Text} from "@/components/ui/text";
 import * as React from "react";
-import {Image, Platform, View, type ViewProps, type ImageProps} from "react-native";
+import {Image, View, type ImageProps, type ViewProps} from "react-native";
 
 const avatarVariants = cva(
   "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
   {
     variants: {
       size: {
+        xs: "h-6 w-6",
         sm: "h-8 w-8",
         md: "h-10 w-10",
         lg: "h-12 w-12",
-        xl: "h-16 w-16",
-      },
+        xl: "h-16 w-16"
+      }
     },
     defaultVariants: {
-      size: "md",
-    },
+      size: "sm"
+    }
   }
 );
 
@@ -59,7 +60,7 @@ const Avatar = React.forwardRef<View, AvatarProps>(
         )}
         {...props}
       >
-        <Text className="text-lg font-medium text-muted-foreground uppercase">
+        <Text className="text-base font-medium text-muted-foreground uppercase">
           {fallback || "U"}
         </Text>
       </View>
@@ -98,5 +99,5 @@ const AvatarFallback = React.forwardRef<View, ViewProps>(
 );
 AvatarFallback.displayName = "AvatarFallback";
 
-export {Avatar, AvatarImage, AvatarFallback};
+export {Avatar, AvatarFallback, AvatarImage};
 export type {AvatarProps};

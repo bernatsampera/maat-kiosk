@@ -1,14 +1,11 @@
 import {cn} from "@/lib/utils";
 import * as React from "react";
-import {Platform, View, type ViewProps} from "react-native";
+import {View, type ViewProps} from "react-native";
 
 const Card = React.forwardRef<View, ViewProps>(({className, ...props}, ref) => (
   <View
     ref={ref}
-    className={cn(
-      "rounded-lg border border-border bg-card shadow-sm shadow-foreground/10 ",
-      className
-    )}
+    className={cn("rounded-lg border border-border bg-card  ", className)}
     {...props}
   />
 ));
@@ -68,4 +65,4 @@ const CardFooter = React.forwardRef<View, ViewProps>(
 );
 CardFooter.displayName = "CardFooter";
 
-export {Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent};
+export {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
